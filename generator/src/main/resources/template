@@ -6,7 +6,7 @@ class %name% private constructor(
 %decl%
 ) {
     constructor(input: ByteArray) : this(
-        input.also { require(input.size == %lenConst%) { "require length $%lenConst%, got ${input.size}" } },
+        input,
         0
     )
 

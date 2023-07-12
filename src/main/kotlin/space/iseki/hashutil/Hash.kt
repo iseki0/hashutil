@@ -9,24 +9,20 @@ import kotlinx.serialization.encoding.Encoder
 import java.util.HexFormat
 import java.io.File
 import java.io.InputStream
+import java.lang.invoke.MethodHandles
+import java.nio.ByteOrder
 import java.nio.file.OpenOption
 import java.nio.file.Path
 import java.security.MessageDigest
 import kotlin.io.path.inputStream
 
+private val INT_ARR_HANDLE = MethodHandles.byteArrayViewVarHandle(IntArray::class.java, ByteOrder.BIG_ENDIAN)!!
 
-private fun getIntOffset(bytes: ByteArray, off: Int) = 0 or
-        (bytes[0 + off].toInt() and 0xff shl 3 * 8) or
-        (bytes[1 + off].toInt() and 0xff shl 2 * 8) or
-        (bytes[2 + off].toInt() and 0xff shl 1 * 8) or
-        (bytes[3 + off].toInt() and 0xff)
-
-private fun putIntOffset(bytes: ByteArray, off: Int, value: Int) {
-    bytes[0 + off] = (value shr 3 * 8).toByte()
-    bytes[1 + off] = (value shr 2 * 8).toByte()
-    bytes[2 + off] = (value shr 1 * 8).toByte()
-    bytes[3 + off] = value.toByte()
+private fun putIntOffset(bytes: ByteArray, off: Int, value: Int){
+    INT_ARR_HANDLE.set(bytes, off, value)
 }
+
+private fun getIntOffset(bytes: ByteArray, off: Int) = INT_ARR_HANDLE.get(bytes, off) as Int
 
 private val hex = HexFormat.of()
 
@@ -50,7 +46,7 @@ class MD5 private constructor(
     private val i3: Int,
 ) {
     constructor(input: ByteArray) : this(
-        input.also { require(input.size == MD5_LENGTH) { "require length $MD5_LENGTH, got ${input.size}" } },
+        input,
         0
     )
 
@@ -126,7 +122,7 @@ class SHA1 private constructor(
     private val i4: Int,
 ) {
     constructor(input: ByteArray) : this(
-        input.also { require(input.size == SHA1_LENGTH) { "require length $SHA1_LENGTH, got ${input.size}" } },
+        input,
         0
     )
 
@@ -208,7 +204,7 @@ class SHA224 private constructor(
     private val i6: Int,
 ) {
     constructor(input: ByteArray) : this(
-        input.also { require(input.size == SHA224_LENGTH) { "require length $SHA224_LENGTH, got ${input.size}" } },
+        input,
         0
     )
 
@@ -299,7 +295,7 @@ class SHA256 private constructor(
     private val i7: Int,
 ) {
     constructor(input: ByteArray) : this(
-        input.also { require(input.size == SHA256_LENGTH) { "require length $SHA256_LENGTH, got ${input.size}" } },
+        input,
         0
     )
 
@@ -330,6 +326,33 @@ class SHA256 private constructor(
     fun bytes(): ByteArray = ByteArray(SHA256_LENGTH).also { copyInto(it, 0) }
 
     override fun toString(): String = hex.formatHex(bytes())
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as SHA256
+
+        if (i0 != other.i0) return false
+        if (i1 != other.i1) return false
+        if (i2 != other.i2) return false
+        if (i3 != other.i3) return false
+        if (i4 != other.i4) return false
+        if (i5 != other.i5) return false
+        if (i6 != other.i6) return false
+        return i7 == other.i7
+    }
+
+    override fun hashCode(): Int {
+        var result = i0
+        result = 31 * result + i1
+        result = 31 * result + i2
+        result = 31 * result + i3
+        result = 31 * result + i4
+        result = 31 * result + i5
+        result = 31 * result + i6
+        result = 31 * result + i7
+        return result
+    }
 
     object Serializer : KSerializer<SHA256> {
         override val descriptor: SerialDescriptor
@@ -371,7 +394,7 @@ class SHA384 private constructor(
     private val i11: Int,
 ) {
     constructor(input: ByteArray) : this(
-        input.also { require(input.size == SHA384_LENGTH) { "require length $SHA384_LENGTH, got ${input.size}" } },
+        input,
         0
     )
 
@@ -490,7 +513,7 @@ class SHA512 private constructor(
     private val i15: Int,
 ) {
     constructor(input: ByteArray) : this(
-        input.also { require(input.size == SHA512_LENGTH) { "require length $SHA512_LENGTH, got ${input.size}" } },
+        input,
         0
     )
 

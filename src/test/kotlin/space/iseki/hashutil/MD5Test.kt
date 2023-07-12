@@ -12,12 +12,13 @@ class MD5Test {
     private val h = MD5(hs)
 
     @Test
-    fun test(){
-        check(MD5(hh) == h)
+    fun test() {
+        assertEquals(h, MD5(hh))
     }
+
     @Test
     fun bytes() {
-        assertContentEquals(hh,h.bytes())
+        assertContentEquals(hh, h.bytes())
     }
 
     @Test
