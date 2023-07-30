@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+/**
+ * Type for MD5
+ */
 @Serializable(with = MD5Serializer.class)
 public final class MD5 implements Hash {
     private final int i0;
@@ -12,6 +15,11 @@ public final class MD5 implements Hash {
     private final int i2;
     private final int i3;
 
+    /**
+     * Create MD5 from byte array, big-endian
+     * @param arr bytes
+     * @param off offset
+     */
     @SuppressWarnings("PointlessArithmeticExpression")
     public MD5(@NotNull byte[] arr, int off) {
         this.i0 = Util.getInt(arr, off + 0 * 4);
@@ -20,10 +28,18 @@ public final class MD5 implements Hash {
         this.i3 = Util.getInt(arr, off + 3 * 4);
     }
 
+    /**
+     * Create MD5 from byte array, big-endian
+     * @param arr bytes
+     */
     public MD5(@NotNull byte[] arr) {
         this(arr, 0);
     }
 
+    /**
+     * Create MD5 from hex string
+     * @param hex hex string
+     */
     public MD5(String hex) {
         this(Util.decodeHex(hex));
     }

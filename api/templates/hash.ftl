@@ -5,12 +5,20 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+/**
+* Type for ${typename}
+*/
 @Serializable(with = ${typename}Serializer.class)
 public final class ${typename} implements Hash {
 <#list 0..<size as i>
     private final int i${i};
 </#list>
 
+    /**
+    * Create ${typename} from byte array, big-endian
+    * @param arr bytes
+    * @param off offset
+    */
     @SuppressWarnings("PointlessArithmeticExpression")
     public ${typename}(@NotNull byte[] arr, int off) {
 <#list 0..<size as i>
@@ -18,10 +26,18 @@ public final class ${typename} implements Hash {
 </#list>
     }
 
+    /**
+    * Create ${typename} from byte array, big-endian
+    * @param arr bytes
+    */
     public ${typename}(@NotNull byte[] arr) {
         this(arr, 0);
     }
 
+    /**
+    * Create ${typename} from hex string
+    * @param hex hex string
+    */
     public ${typename}(String hex) {
         this(Util.decodeHex(hex));
     }
