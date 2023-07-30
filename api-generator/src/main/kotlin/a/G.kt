@@ -4,11 +4,13 @@ import freemarker.template.Configuration
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.UnknownDomainObjectException
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.tasks.*
 import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.api.tasks.javadoc.Javadoc
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.Serializable
 import java.nio.file.StandardOpenOption
@@ -22,11 +24,20 @@ class G : Plugin<Project> {
     override fun apply(project: Project) {
         val j = project.extensions.getByType(JavaPluginExtension::class.java) ?: return
         j.sourceSets.getByName("main").java.srcDir(project.layout.buildDirectory.dir(DEFAULT_OUTPUT))
-        project.tasks.create(DEFAULT_TASK_NAME, GenTask::class.java) { task ->
-            project.tasks.withType(KotlinCompile::class.java){
+        val task = project.tasks.create(DEFAULT_TASK_NAME, GenTask::class.java)
+        project.afterEvaluate {
+            project.tasks.withType(KotlinCompile::class.java) {
                 it.dependsOn(task)
             }
-            project.tasks.withType(JavaCompile::class.java){
+            project.tasks.withType(JavaCompile::class.java) {
+                it.dependsOn(task)
+            }
+            try {
+                project.tasks.getByName("sourcesJar") {
+                    it.dependsOn(task)
+                }
+            }catch (_: UnknownDomainObjectException){}
+            project.tasks.withType(Javadoc::class.java) {
                 it.dependsOn(task)
             }
         }

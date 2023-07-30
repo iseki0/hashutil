@@ -35,8 +35,8 @@ tasks.withType<KotlinCompile> {
 }
 
 ftlGenerate {
-    fun hash(name: String, bits: Int){
-        val size = bits/8/4
+    fun hash(name: String, bits: Int) {
+        val size = bits / 8 / 4
         val data = mapOf("typename" to name, "size" to size)
         render("hash.ftl", "space/iseki/hashutil/$name.java", data)
         render("serializer.ftl", "space/iseki/hashutil/${name}Serializer.kt", data)
@@ -48,3 +48,7 @@ ftlGenerate {
     hash("SHA512", 512)
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
