@@ -1,6 +1,8 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    kotlin("jvm") version "1.8.21"
-    kotlin("plugin.serialization") version "1.8.21"
+    kotlin("jvm") version "1.9.0"
+    kotlin("plugin.serialization") version "1.9.0"
     id("org.jetbrains.dokka") version "1.8.10"
     signing
     `maven-publish`
@@ -14,6 +16,18 @@ allprojects {
         mavenCentral()
     }
 
+    tasks.withType<AbstractArchiveTask>().configureEach {
+        isPreserveFileTimestamps = false
+        isReproducibleFileOrder = true
+    }
+
+    tasks.withType<KotlinCompile> {
+        kotlinOptions.freeCompilerArgs += "-Xno-param-assertions"
+        kotlinOptions.freeCompilerArgs += "-Xno-call-assertions"
+        kotlinOptions.freeCompilerArgs += "-Xcontext-receivers"
+        kotlinOptions.freeCompilerArgs += "-Xassertions=jvm"
+        kotlinOptions.freeCompilerArgs += "-Xlambdas=indy"
+    }
 }
 
 dependencies {
@@ -35,10 +49,6 @@ kotlin {
     }
 }
 
-tasks.withType<AbstractArchiveTask>().configureEach {
-    isPreserveFileTimestamps = false
-    isReproducibleFileOrder = true
-}
 
 java {
     withSourcesJar()
