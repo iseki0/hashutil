@@ -3,6 +3,9 @@ package space.iseki.hashutil;
 import kotlinx.serialization.Serializable;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 /**
@@ -38,7 +41,7 @@ public final class ${typename} implements Hash {
     * Create ${typename} from hex string
     * @param hex hex string
     */
-    public ${typename}(String hex) {
+    public ${typename}(@NotNull String hex) {
         this(Util.decodeHex(hex));
     }
 
@@ -78,4 +81,15 @@ public final class ${typename} implements Hash {
     public int hashCode() {
         return Objects.hash(<#list 0..<size as i>i${i}<#sep>, </#list>);
     }
+
+    /**
+     * Get {@link MessageDigest} of ${typename}
+     *
+     * @return the message digest
+     * @throws NoSuchAlgorithmException if no Provider supports a MessageDigestSpi implementation for the specified algorithm
+     */
+    public static @NotNull MessageDigest getMessageDigest() throws NoSuchAlgorithmException {
+        return MessageDigest.getInstance("${typename}");
+    }
+
 }

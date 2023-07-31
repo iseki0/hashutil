@@ -41,6 +41,7 @@ ftlGenerate {
         val data = mapOf("typename" to name, "size" to size)
         render("hash.ftl", "space/iseki/hashutil/$name.java", data)
         render("serializer.ftl", "space/iseki/hashutil/${name}Serializer.kt", data)
+        render("helper.ftl", "space/iseki/hashutil/${name}.kt", data)
     }
     hash("SHA1", 160)
     hash("SHA128", 128)

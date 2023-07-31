@@ -2,9 +2,12 @@ package space.iseki.hashutil;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
+import java.security.MessageDigest;
 import java.util.HexFormat;
 
 class Util {
@@ -25,6 +28,18 @@ class Util {
 
     public static @NotNull String encodeHex(@NotNull byte[] a) {
         return HexUtil.encode(a);
+    }
+
+    static final int DEFAULT_BUFFER_SIZE = 16 * 1024;
+
+    static @NotNull byte[] hashStream(@NotNull MessageDigest messageDigest, @NotNull InputStream inputStream, int bufferSize) throws IOException {
+        var buf = new byte[bufferSize];
+        while (true) {
+            var i = inputStream.read(buf);
+            if (i == -1) break;
+            messageDigest.update(buf, 0, bufferSize);
+        }
+        return messageDigest.digest();
     }
 }
 

@@ -3,6 +3,9 @@ package space.iseki.hashutil;
 import kotlinx.serialization.Serializable;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 /**
@@ -17,6 +20,7 @@ public final class MD5 implements Hash {
 
     /**
      * Create MD5 from byte array, big-endian
+     *
      * @param arr bytes
      * @param off offset
      */
@@ -30,6 +34,7 @@ public final class MD5 implements Hash {
 
     /**
      * Create MD5 from byte array, big-endian
+     *
      * @param arr bytes
      */
     public MD5(@NotNull byte[] arr) {
@@ -38,9 +43,10 @@ public final class MD5 implements Hash {
 
     /**
      * Create MD5 from hex string
+     *
      * @param hex hex string
      */
-    public MD5(String hex) {
+    public MD5(@NotNull String hex) {
         this(Util.decodeHex(hex));
     }
 
@@ -80,5 +86,15 @@ public final class MD5 implements Hash {
     @Override
     public int hashCode() {
         return Objects.hash(i0, i1, i2, i3);
+    }
+
+    /**
+     * Get {@link MessageDigest} of MD5
+     *
+     * @return the message digest
+     * @throws NoSuchAlgorithmException if no Provider supports a MessageDigestSpi implementation for the specified algorithm
+     */
+    public static @NotNull MessageDigest getMessageDigest() throws NoSuchAlgorithmException {
+        return MessageDigest.getInstance("MD5");
     }
 }

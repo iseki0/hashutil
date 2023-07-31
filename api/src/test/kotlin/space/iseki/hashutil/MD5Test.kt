@@ -2,6 +2,7 @@ package space.iseki.hashutil
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class MD5Test {
 
@@ -11,5 +12,6 @@ class MD5Test {
         val md5 = MD5(text)
         assertEquals(md5, MD5(md5.bytes()))
         assertEquals(text, md5.toString())
+        assertNotNull(MD5.getMessageDigest())
     }
 }
