@@ -77,7 +77,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
             pom {
-//                name.set("hashutil-api")
+                name.set("hashutil")
                 description.set("Utils hash")
                 url.set("https://github.com/iseki0/hashutil")
                 licenses {
