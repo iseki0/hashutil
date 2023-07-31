@@ -4,6 +4,7 @@ package space.iseki.hashutil
 
 import java.io.File
 import java.io.InputStream
+import java.nio.charset.Charset
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 import kotlin.io.path.inputStream
@@ -19,3 +20,9 @@ fun Path.${typename}(bufferSize: Int = Util.DEFAULT_BUFFER_SIZE, vararg openOpti
 @JvmOverloads
 fun InputStream.${typename}(bufferSize: Int = Util.DEFAULT_BUFFER_SIZE): ${typename} =
     Util.hashStream(${typename}.getMessageDigest(), this, bufferSize).let(::${typename})
+
+fun ByteArray.${typename}(): ${typename} = ${typename}.getMessageDigest().digest(this).let(::${typename})
+
+fun String.${typename}(): ${typename} = ${typename}.getMessageDigest().digest(toByteArray(Charsets.UTF_8)).let(::${typename})
+
+fun String.${typename}(charset: Charset): ${typename} = ${typename}.getMessageDigest().digest(toByteArray(charset)).let(::${typename})
