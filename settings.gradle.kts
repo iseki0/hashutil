@@ -1,7 +1,6 @@
 rootProject.name = "hashutil"
 
-include("generator")
-include("api")
+include("hashutil-api")
 pluginManagement {
     includeBuild("api-generator")
 }
