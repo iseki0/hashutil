@@ -2,18 +2,20 @@ package space.iseki.hashutil;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.VarHandle;
+import java.nio.ByteOrder;
 import java.util.HexFormat;
 
 class Util {
+    private static final VarHandle INT_HANDLE = MethodHandles.byteArrayViewVarHandle(int[].class, ByteOrder.BIG_ENDIAN);
+
     public static int getInt(byte[] a, int off) {
-        return (a[off] << 24 & 0xff) | (a[off + 1] << 16 & 0xff) | (a[off + 2] << 8 & 0xff) | (a[off + 3] & 0xff);
+        return (int) INT_HANDLE.get(a, off);
     }
 
     public static void putInt(byte[] a, int off, int value) {
-        a[off] = (byte) (value >> 24);
-        a[off + 1] = (byte) (value >> 16);
-        a[off + 2] = (byte) (value >> 8);
-        a[off + 3] = (byte) value;
+        INT_HANDLE.set(a, off, value);
     }
 
 

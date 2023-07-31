@@ -11,6 +11,7 @@ plugins {
 
 dependencies {
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    testImplementation(kotlin("test"))
 }
 
 tasks.withType<Jar> {
