@@ -17,8 +17,8 @@ import java.nio.file.StandardOpenOption
 import kotlin.io.path.createDirectories
 import kotlin.io.path.outputStream
 
-private val DEFAULT_TASK_NAME = "ftlGenerate"
-private val DEFAULT_OUTPUT = "ftl/generated/main/java"
+private const val DEFAULT_TASK_NAME = "ftlGenerate"
+private const val DEFAULT_OUTPUT = "ftl/generated/main/java"
 
 class G : Plugin<Project> {
     override fun apply(project: Project) {
