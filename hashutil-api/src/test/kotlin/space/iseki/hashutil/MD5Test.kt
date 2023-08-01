@@ -1,5 +1,6 @@
 package space.iseki.hashutil
 
+import java.nio.file.Path
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -13,5 +14,10 @@ class MD5Test {
         assertEquals(md5, MD5(md5.bytes()))
         assertEquals(text, md5.toString())
         assertNotNull(MD5.getMessageDigest())
+    }
+
+    @Test
+    fun test1(){
+        println(Path.of("../gradle/wrapper/gradle-wrapper.jar").MD5())
     }
 }

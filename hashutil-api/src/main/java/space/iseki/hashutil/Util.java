@@ -37,7 +37,7 @@ class Util {
         while (true) {
             var i = inputStream.read(buf);
             if (i == -1) break;
-            messageDigest.update(buf, 0, bufferSize);
+            messageDigest.update(buf, 0, i);
         }
         return messageDigest.digest();
     }
