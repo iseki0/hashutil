@@ -7,7 +7,7 @@ plugins {
 
 allprojects {
     group = "space.iseki.hashutil"
-    version = "0.1.2-SNAPSHOT"
+    version = "0.1.3-SNAPSHOT"
 
     repositories {
         mavenCentral()
