@@ -56,7 +56,7 @@ public final class ${typename} implements Hash {
 
     @Override
     public @NotNull byte[] bytes() {
-        return bytes(new byte[16], 0);
+        return bytes(new byte[${size} * 4], 0);
     }
 
     @Override

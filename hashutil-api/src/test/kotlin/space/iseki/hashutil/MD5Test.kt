@@ -20,4 +20,10 @@ class MD5Test {
     fun test1(){
         println(Path.of("../gradle/wrapper/gradle-wrapper.jar").MD5())
     }
+
+    @Test
+    fun test2(){
+        val shA256 = "aa".encodeToByteArray().SHA256()
+        println(shA256)
+    }
 }
