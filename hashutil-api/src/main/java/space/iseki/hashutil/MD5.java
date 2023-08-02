@@ -3,7 +3,6 @@ package space.iseki.hashutil;
 import kotlinx.serialization.Serializable;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
