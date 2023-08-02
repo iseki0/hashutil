@@ -9,11 +9,19 @@ public enum Algorithms {
     SHA512(64),
 
     ;
+
     private final int len;
-    Algorithms(int len){
+
+    Algorithms(int len) {
         this.len = len;
     }
-    public int length(){
+
+    /**
+     * the hash length
+     *
+     * @return number of bytes
+     */
+    public int length() {
         return len;
     }
 }
