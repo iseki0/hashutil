@@ -6,7 +6,7 @@ import kotlinx.serialization.descriptors.serialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-internal class ${typename}Serializer : KSerializer<${typename}> {
+internal object ${typename}Serializer : KSerializer<${typename}> {
     override val descriptor: SerialDescriptor
         get() = serialDescriptor<String>()
 

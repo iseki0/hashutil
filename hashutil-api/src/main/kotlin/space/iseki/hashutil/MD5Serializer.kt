@@ -6,7 +6,7 @@ import kotlinx.serialization.descriptors.serialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-internal class MD5Serializer : KSerializer<MD5> {
+internal object MD5Serializer : KSerializer<MD5> {
     override val descriptor: SerialDescriptor
         get() = serialDescriptor<String>()
 
