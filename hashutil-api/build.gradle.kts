@@ -3,37 +3,34 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    java
     kotlin("jvm")
     id("space.iseki.tgenerator")
+    id("org.jetbrains.dokka")
     signing
     `maven-publish`
 }
 
 dependencies {
+    compileOnly("org.jetbrains:annotations:24.0.1")
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     testImplementation(kotlin("test"))
-}
-
-tasks.withType<Jar> {
-//    manifest.attributes("Multi-Release" to true)
-//    into("META-INF/versions/9") {
-//        from(sourceSets["java17"].output)
-//    }
 }
 
 tasks.named<JavaCompile>("compileJava") {
     options.release.set(17)
 }
-//tasks.named<JavaCompile>("compileJava17Java"){
-//    options.release.set(17)
-//}
 
 tasks.withType<KotlinCompile> {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
-//        jvmTarget.set(JvmTarget.JVM_1_8)
     }
+}
+
+tasks.named("compileJava", JavaCompile::class.java) {
+    options.compilerArgumentProviders.add(CommandLineArgumentProvider {
+        // Provide compiled Kotlin classes to javac – needed for Java/Kotlin mixed sources to work
+        listOf("--patch-module", "space.iseki.hashutil=${sourceSets["main"].output.asPath}")
+    })
 }
 
 ftlGenerate {
@@ -53,7 +50,6 @@ ftlGenerate {
 
 java {
     withSourcesJar()
-    withJavadocJar()
 }
 
 publishing {
@@ -76,6 +72,12 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
+            val publication = this
+            val javadocJar = tasks.register("${publication.name}JavadocJar", Jar::class) {
+                archiveClassifier.set("javadoc")
+                from(tasks.dokkaJavadoc)
+                archiveBaseName.set("${archiveBaseName.get()}-${publication.name}")
+            }
             pom {
                 name.set("hashutil")
                 description.set("Utils hash")
