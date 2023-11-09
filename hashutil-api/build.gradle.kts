@@ -78,6 +78,7 @@ publishing {
                 from(tasks.dokkaJavadoc)
                 archiveBaseName.set("${archiveBaseName.get()}-${publication.name}")
             }
+            artifact(javadocJar)
             pom {
                 name.set("hashutil")
                 description.set("Utils hash")
