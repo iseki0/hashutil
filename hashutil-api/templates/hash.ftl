@@ -3,16 +3,21 @@ package space.iseki.hashutil;
 import kotlinx.serialization.Serializable;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Path;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
 import java.util.Objects;
 
 /**
 * Type for ${typename}
 */
 @Serializable(with = ${typename}Serializer.class)
-public final class ${typename} implements Hash {
+public final class ${typename} {
+private static final ThreadLocal<MessageDigest> threadLocal = ThreadLocal.withInitial(() -> SharedUtil.messageDigest("${typename}"));
+
 <#list 0..<size as i>
     private final int i${i};
 </#list>
@@ -23,9 +28,9 @@ public final class ${typename} implements Hash {
     * @param off offset
     */
     @SuppressWarnings("PointlessArithmeticExpression")
-    public ${typename}(@NotNull byte[] arr, int off) {
+    public ${typename}(byte @NotNull [] arr, int off) {
 <#list 0..<size as i>
-    this.i${i} = Util.getInt(arr, off + ${i} * 4);
+    this.i${i} = (int) SharedUtil.AVH.get(arr, off + ${i} * 4);
 </#list>
     }
 
@@ -33,7 +38,7 @@ public final class ${typename} implements Hash {
     * Create ${typename} from byte array, big-endian
     * @param arr bytes
     */
-    public ${typename}(@NotNull byte[] arr) {
+    public ${typename}(byte @NotNull [] arr) {
         this(arr, 0);
     }
 
@@ -42,26 +47,29 @@ public final class ${typename} implements Hash {
     * @param hex hex string
     */
     public ${typename}(@NotNull String hex) {
-        this(Util.decodeHex(hex));
+        this(HexFormat.of().parseHex(hex));
     }
 
-    @Override
+    static @NotNull MessageDigest getThreadLocalDigest() {
+    return threadLocal.get();
+    }
+
+
     @SuppressWarnings("PointlessArithmeticExpression")
-    public @NotNull byte[] bytes(@NotNull byte[] arr, int off) {
+    public byte @NotNull [] bytes(byte @NotNull [] arr, int off) {
 <#list 0..<size as i>
-    Util.putInt(arr, off + ${i} * 4, i${i});
+    SharedUtil.AVH.set(arr, off + ${i} * 4, i${i});
 </#list>
         return arr;
     }
 
-    @Override
-    public @NotNull byte[] bytes() {
+    public byte @NotNull [] bytes() {
         return bytes(new byte[${size} * 4], 0);
     }
 
     @Override
     public @NotNull String toString() {
-        return Util.encodeHex(bytes());
+        return HexFormat.of().formatHex(bytes());
     }
 
     @Override
@@ -73,23 +81,60 @@ public final class ${typename} implements Hash {
     }
 
     @Override
-    public @NotNull Algorithms kind() {
-        return Algorithms.${typename};
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(<#list 0..<size as i>i${i}<#sep>, </#list>);
     }
 
+
     /**
-     * Get {@link MessageDigest} of ${typename}
-     *
-     * @return the message digest
-     * @throws NoSuchAlgorithmException if no Provider supports a MessageDigestSpi implementation for the specified algorithm
-     */
-    public static @NotNull MessageDigest getMessageDigest() throws NoSuchAlgorithmException {
-        return MessageDigest.getInstance("${typename}");
+    * Create hash of the input stream.
+    * @param inputStream the input stream
+    * @return the hash
+    * @throws IOException for underlying {@link IOException}
+    */
+    public static @NotNull ${typename} of(@NotNull InputStream inputStream) throws IOException {
+    return SharedUtil.forInputStream(getThreadLocalDigest(), inputStream, ${typename}::new);
     }
 
-}
+    /**
+    * Create hash of the channel.
+    * @param channel the channel
+    * @return the hash
+    * @throws IOException for underlying {@link IOException}
+    */
+    public static @NotNull ${typename} of(@NotNull ReadableByteChannel channel) throws IOException {
+    return SharedUtil.forReadableChannel(getThreadLocalDigest(), channel, ${typename}::new);
+    }
+
+    /**
+    * Create hash of the file.
+    * @param path path of the file
+    * @return the hash
+    * @throws IOException for underlying {@link IOException}
+    */
+    public static @NotNull ${typename} of(@NotNull Path path) throws IOException {
+    return SharedUtil.forPath(getThreadLocalDigest(), path, ${typename}::new);
+    }
+
+    /**
+    * Create hash of the byte array.
+    * @param data the byte array
+    * @param off the offset
+    * @param len the length
+    * @return the hash
+    */
+    public static @NotNull ${typename} of(byte @NotNull [] data, int off, int len) {
+    return SharedUtil.forBytes(getThreadLocalDigest(), data, off, len, ${typename}::new);
+    }
+
+    /**
+    * Create hash of the byte array.
+    * @param data the byte array
+    * @return the hash
+    */
+    public static @NotNull ${typename} of(byte@NotNull [] data){
+    return of(data, 0, data.length);
+    }
+
+    }
+

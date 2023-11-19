@@ -13,17 +13,19 @@ class MD5Test {
         val md5 = MD5(text)
         assertEquals(md5, MD5(md5.bytes()))
         assertEquals(text, md5.toString())
-        assertNotNull(MD5.getMessageDigest())
     }
 
     @Test
     fun test1(){
-        println(Path.of("../gradle/wrapper/gradle-wrapper.jar").MD5())
+        val ref = Path.of("../gradle/wrapper/gradle-wrapper.jar").MD5()
+        println(ref)
+        assertEquals(MD5("bd2800c24d911ce05e46f6a283bf713b"), ref)
     }
 
     @Test
     fun test2(){
         val shA256 = "aa".encodeToByteArray().SHA256()
+        assertEquals(SHA256("961b6dd3ede3cb8ecbaacbd68de040cd78eb2ed5889130cceb4c49268ea4d506"), shA256)
         println(shA256)
     }
 }

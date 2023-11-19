@@ -41,11 +41,14 @@ ftlGenerate {
         render("serializer.ftl", "space/iseki/hashutil/${name}Serializer.kt", data)
         render("helper.ftl", "space/iseki/hashutil/${name}.kt", data)
     }
+    hash("MD2", 128)
+    hash("MD5", 128)
     hash("SHA1", 160)
     hash("SHA128", 128)
     hash("SHA224", 224)
     hash("SHA256", 256)
     hash("SHA512", 512)
+    hash("SM3", 256)
 }
 
 java {
