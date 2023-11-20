@@ -55,6 +55,10 @@ java {
     withSourcesJar()
 }
 
+tasks.dokkaJavadoc.configure {
+    dependsOn(tasks.ftlGenerate)
+}
+
 publishing {
     repositories {
         maven {
