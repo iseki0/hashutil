@@ -23,6 +23,8 @@ allprojects {
         kotlinOptions.freeCompilerArgs += "-Xno-param-assertions"
         kotlinOptions.freeCompilerArgs += "-Xno-call-assertions"
         kotlinOptions.freeCompilerArgs += "-Xcontext-receivers"
+        kotlinOptions.freeCompilerArgs += "-Xno-receiver-assertions"
+        kotlinOptions.freeCompilerArgs += "-Xno-source-debug-extension"
         kotlinOptions.freeCompilerArgs += "-Xassertions=jvm"
         kotlinOptions.freeCompilerArgs += "-Xlambdas=indy"
     }
