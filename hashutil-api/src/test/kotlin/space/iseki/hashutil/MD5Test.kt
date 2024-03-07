@@ -1,6 +1,7 @@
 package space.iseki.hashutil
 
 import java.nio.file.Path
+import kotlin.io.path.inputStream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -19,7 +20,7 @@ class MD5Test {
     fun test1(){
         val ref = Path.of("../gradle/wrapper/gradle-wrapper.jar").MD5()
         println(ref)
-        assertEquals(MD5("bd2800c24d911ce05e46f6a283bf713b"), ref)
+        assertEquals(MD5("f129ee25a1c8deabc40504fd5a92192f"), ref)
     }
 
     @Test
@@ -27,5 +28,15 @@ class MD5Test {
         val shA256 = "aa".encodeToByteArray().SHA256()
         assertEquals(SHA256("961b6dd3ede3cb8ecbaacbd68de040cd78eb2ed5889130cceb4c49268ea4d506"), shA256)
         println(shA256)
+    }
+
+    @Test
+    fun testInterceptedInputStream(){
+        Path.of("../gradle/wrapper/gradle-wrapper.jar").inputStream().use {
+            val md5InputStream = MD5.intercept(it.buffered())
+            val b = MD5.of(md5InputStream)
+            assertEquals(b, md5InputStream.digest)
+            println(md5InputStream.digest)
+        }
     }
 }

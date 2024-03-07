@@ -122,6 +122,10 @@ class SharedUtil {
         return call.apply(arr);
     }
 
+    static <T> MessageDigestInterceptedInputStream<T> forInterceptedInputStream(MessageDigest digest, InputStream inputStream, Function<byte[], T> call) {
+        return new MessageDigestInterceptedInputStream<>(digest, call, inputStream);
+    }
+
     private static @NotNull ByteBuffer getSharedBuffer() {
         var ref = bufferThreadLocal.get();
         var r = ref != null ? ref.get() : null;
