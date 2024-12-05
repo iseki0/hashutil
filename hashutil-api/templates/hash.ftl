@@ -15,7 +15,7 @@ import java.util.Objects;
  * Type for ${typename}
  */
 @Serializable(with = ${typename}Serializer.class)
-public final class ${typename} {
+public final class ${typename} implements Comparable<${typename}> {
     private static final ThreadLocal<MessageDigest> threadLocal = ThreadLocal.withInitial(() -> SharedUtil.messageDigest("${typename}"));
 
     private static @NotNull MessageDigest newDigest(){
@@ -149,5 +149,16 @@ public final class ${typename} {
         return SharedUtil.forInterceptedInputStream(newDigest(), inputStream, ${typename}::new);
     }
 
+    @Override
+    public int compareTo(@NotNull ${typename} o) {
+        int r;
+<#list 0..<size as i>
+        r = Integer.compareUnsigned(i${i}, o.i${i});
+        if (r != 0) {
+            return r;
+        }
+</#list>
+        return 0;
+    }
 }
 
