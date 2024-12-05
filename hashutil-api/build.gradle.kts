@@ -3,7 +3,6 @@ import a.ftlGenerate
 plugins {
     kotlin("jvm")
     id("space.iseki.tgenerator")
-    id("org.jetbrains.dokka")
     signing
     `maven-publish`
     id("org.jetbrains.kotlinx.binary-compatibility-validator")
@@ -53,8 +52,8 @@ java {
     withSourcesJar()
 }
 
-tasks.dokkaJavadoc.configure {
-    dependsOn(tasks.ftlGenerate)
+val emptyJavadoc = tasks.create("emptyJavadoc", Jar::class) {
+    archiveClassifier.set("javadoc")
 }
 
 publishing {
@@ -77,13 +76,7 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
-            val publication = this
-            val javadocJar = tasks.register("${publication.name}JavadocJar", Jar::class) {
-                archiveClassifier.set("javadoc")
-                from(tasks.dokkaJavadoc)
-                archiveBaseName.set("${archiveBaseName.get()}-${publication.name}")
-            }
-            artifact(javadocJar)
+            artifact(emptyJavadoc)
             pom {
                 val projectUrl = "https://github.com/iseki0/hashutil"
                 name = "hashutil"
@@ -121,11 +114,9 @@ publishing {
     }
 }
 
-afterEvaluate {
-    signing {
-        // To use local gpg command, configure gpg options in ~/.gradle/gradle.properties
-        // reference: https://docs.gradle.org/current/userguide/signing_plugin.html#example_configure_the_gnupgsignatory
-        useGpgCmd()
-        publishing.publications.forEach { sign(it) }
-    }
+signing {
+    // To use local gpg command, configure gpg options in ~/.gradle/gradle.properties
+    // reference: https://docs.gradle.org/current/userguide/signing_plugin.html#example_configure_the_gnupgsignatory
+    useGpgCmd()
+    sign(publishing.publications)
 }
