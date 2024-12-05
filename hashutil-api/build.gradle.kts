@@ -17,14 +17,13 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
-tasks.named<JavaCompile>("compileJava") {
-    options.release.set(17)
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
-tasks.withType<KotlinCompile> {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
-    }
+kotlin {
+    jvmToolchain(17)
 }
 
 tasks.named("compileJava", JavaCompile::class.java) {
