@@ -63,6 +63,7 @@ public final class space/iseki/hashutil/-SM3 {
 }
 
 public final class space/iseki/hashutil/MD2 : java/lang/Comparable {
+	public static final field SIZE_IN_BYTES I
 	public static final field ZERO Lspace/iseki/hashutil/MD2;
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> ([B)V
@@ -83,6 +84,7 @@ public final class space/iseki/hashutil/MD2 : java/lang/Comparable {
 }
 
 public final class space/iseki/hashutil/MD5 : java/lang/Comparable {
+	public static final field SIZE_IN_BYTES I
 	public static final field ZERO Lspace/iseki/hashutil/MD5;
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> ([B)V
@@ -113,6 +115,7 @@ public class space/iseki/hashutil/MessageDigestInterceptedInputStream : java/io/
 }
 
 public final class space/iseki/hashutil/SHA1 : java/lang/Comparable {
+	public static final field SIZE_IN_BYTES I
 	public static final field ZERO Lspace/iseki/hashutil/SHA1;
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> ([B)V
@@ -133,6 +136,7 @@ public final class space/iseki/hashutil/SHA1 : java/lang/Comparable {
 }
 
 public final class space/iseki/hashutil/SHA128 : java/lang/Comparable {
+	public static final field SIZE_IN_BYTES I
 	public static final field ZERO Lspace/iseki/hashutil/SHA128;
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> ([B)V
@@ -153,6 +157,7 @@ public final class space/iseki/hashutil/SHA128 : java/lang/Comparable {
 }
 
 public final class space/iseki/hashutil/SHA224 : java/lang/Comparable {
+	public static final field SIZE_IN_BYTES I
 	public static final field ZERO Lspace/iseki/hashutil/SHA224;
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> ([B)V
@@ -173,6 +178,7 @@ public final class space/iseki/hashutil/SHA224 : java/lang/Comparable {
 }
 
 public final class space/iseki/hashutil/SHA256 : java/lang/Comparable {
+	public static final field SIZE_IN_BYTES I
 	public static final field ZERO Lspace/iseki/hashutil/SHA256;
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> ([B)V
@@ -193,6 +199,7 @@ public final class space/iseki/hashutil/SHA256 : java/lang/Comparable {
 }
 
 public final class space/iseki/hashutil/SHA512 : java/lang/Comparable {
+	public static final field SIZE_IN_BYTES I
 	public static final field ZERO Lspace/iseki/hashutil/SHA512;
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> ([B)V
@@ -213,6 +220,7 @@ public final class space/iseki/hashutil/SHA512 : java/lang/Comparable {
 }
 
 public final class space/iseki/hashutil/SM3 : java/lang/Comparable {
+	public static final field SIZE_IN_BYTES I
 	public static final field ZERO Lspace/iseki/hashutil/SM3;
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> ([B)V

@@ -18,6 +18,7 @@ import java.util.Objects;
 public final class ${typename} implements Comparable<${typename}> {
     private static final ThreadLocal<MessageDigest> threadLocal = ThreadLocal.withInitial(() -> SharedUtil.messageDigest("${typename}"));
     public static final @NotNull ${typename} ZERO = new ${typename}(new byte[${size} * 4]);
+    public static final int SIZE_IN_BYTES = ${size} * 4;
 
     private static @NotNull MessageDigest newDigest(){
         return SharedUtil.messageDigest("${typename}");
