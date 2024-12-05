@@ -66,6 +66,17 @@ public final class ${typename} implements Comparable<${typename}> {
         return threadLocal.get();
     }
 
+    /**
+    * Create a new {@link MessageDigest} with the algorithm "${typename}".
+    *
+    * @throws RuntimeException wraps a {@link NoSuchAlgorithmException}, if the algorithm is not available
+    * @return the message digest
+    * @see MessageDigest#getInstance(String)
+    */
+    public static @NotNull MessageDigest getMessageDigest() {
+        return newDigest();
+    }
+
 
     @SuppressWarnings("PointlessArithmeticExpression")
     public byte @NotNull [] bytes(byte @NotNull [] arr, int off) {
