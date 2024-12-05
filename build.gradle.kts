@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "2.0.20" apply false
-    kotlin("plugin.serialization") version "1.9.0" apply false
+    kotlin("plugin.serialization") version "2.0.20" apply false
     id("org.jetbrains.dokka") version "1.9.0" apply false
     id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.16.3" apply false
 }
