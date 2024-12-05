@@ -20,7 +20,7 @@ class MD5Test {
     fun test1(){
         val ref = Path.of("../gradle/wrapper/gradle-wrapper.jar").MD5()
         println(ref)
-        assertEquals(MD5("f129ee25a1c8deabc40504fd5a92192f"), ref)
+        assertEquals(MD5("34e61f332027ce6850d6e3d94402ae8c"), ref)
     }
 
     @Test
