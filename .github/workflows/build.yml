@@ -24,4 +24,4 @@ jobs:
           build-scan-terms-of-use-agree: "yes"
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: chmod 755 ./gradlew && ./gradlew build
