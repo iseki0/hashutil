@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Path;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 import java.util.Objects;
 
@@ -35,7 +36,7 @@ public final class ${typename} implements Comparable<${typename}> {
     }
 
     /**
-     * Create ${typename} from byte array, big-endian
+     * Create ${typename} from a byte array, big-endian
      * @param arr bytes
      * @param off offset
      */
@@ -47,7 +48,7 @@ public final class ${typename} implements Comparable<${typename}> {
     }
 
     /**
-     * Create ${typename} from byte array, big-endian
+     * Create ${typename} from a byte array, big-endian
      * @param arr bytes
      */
     public ${typename}(byte @NotNull [] arr) {
@@ -118,6 +119,7 @@ public final class ${typename} implements Comparable<${typename}> {
      * @param inputStream the input stream
      * @return the hash
      * @throws IOException for underlying {@link IOException}
+     * @throws RuntimeException wraps a {@link NoSuchAlgorithmException}, if the algorithm is not available
      */
     public static @NotNull ${typename} of(@NotNull InputStream inputStream) throws IOException {
         return SharedUtil.forInputStream(getThreadLocalDigest(), inputStream, ${typename}::new);
@@ -128,6 +130,7 @@ public final class ${typename} implements Comparable<${typename}> {
      * @param channel the channel
      * @return the hash
      * @throws IOException for underlying {@link IOException}
+     * @throws RuntimeException wraps a {@link NoSuchAlgorithmException}, if the algorithm is not available
      */
     public static @NotNull ${typename} of(@NotNull ReadableByteChannel channel) throws IOException {
         return SharedUtil.forReadableChannel(getThreadLocalDigest(), channel, ${typename}::new);
@@ -138,6 +141,7 @@ public final class ${typename} implements Comparable<${typename}> {
      * @param path path of the file
      * @return the hash
      * @throws IOException for underlying {@link IOException}
+     * @throws RuntimeException wraps a {@link NoSuchAlgorithmException}, if the algorithm is not available
      */
     public static @NotNull ${typename} of(@NotNull Path path) throws IOException {
         return SharedUtil.forPath(getThreadLocalDigest(), path, ${typename}::new);
@@ -149,6 +153,7 @@ public final class ${typename} implements Comparable<${typename}> {
      * @param off the offset
      * @param len the length
      * @return the hash
+     * @throws RuntimeException wraps a {@link NoSuchAlgorithmException}, if the algorithm is not available
      */
     public static @NotNull ${typename} of(byte @NotNull [] data, int off, int len) {
         return SharedUtil.forBytes(getThreadLocalDigest(), data, off, len, ${typename}::new);
@@ -158,6 +163,7 @@ public final class ${typename} implements Comparable<${typename}> {
      * Create hash of the byte array.
      * @param data the byte array
      * @return the hash
+     * @throws RuntimeException wraps a {@link NoSuchAlgorithmException}, if the algorithm is not available
      */
     public static @NotNull ${typename} of(byte@NotNull [] data){
         return of(data, 0, data.length);
@@ -167,6 +173,7 @@ public final class ${typename} implements Comparable<${typename}> {
      * Create an interception {@link InputStream}.
      * @param inputStream the input stream
      * @return the intercepted input stream
+     * @throws RuntimeException wraps a {@link NoSuchAlgorithmException}, if the algorithm is not available
      */
     public static @NotNull MessageDigestInterceptedInputStream<${typename}> intercept(@NotNull InputStream inputStream) {
         return SharedUtil.forInterceptedInputStream(newDigest(), inputStream, ${typename}::new);
