@@ -5,17 +5,16 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
-import java.util.function.Function;
 
 public class MessageDigestInterceptedInputStream<T> extends InputStream {
     private final MessageDigest digest;
-    private final Function<byte[], T> creator;
+    private final SharedUtil.FC<T> creator;
     private final InputStream inputStream;
     private T r;
 
-    MessageDigestInterceptedInputStream(MessageDigest digest, Function<byte[], T> creator, InputStream inputStream) {
+    MessageDigestInterceptedInputStream(MessageDigest digest, SharedUtil.FC<T> call, InputStream inputStream) {
         this.digest = digest;
-        this.creator = creator;
+        this.creator = call;
         this.inputStream = inputStream;
     }
 
@@ -51,7 +50,7 @@ public class MessageDigestInterceptedInputStream<T> extends InputStream {
 
     public T getDigest() {
         if (r != null) return r;
-        return r = creator.apply(digest.digest());
+        return r = creator.apply(digest.digest(), 0);
     }
 
     private void checkDigestIsNull() {

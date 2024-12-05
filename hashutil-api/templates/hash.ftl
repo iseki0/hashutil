@@ -51,7 +51,7 @@ public final class ${typename} implements Comparable<${typename}> {
      * @param arr bytes
      */
     public ${typename}(byte @NotNull [] arr) {
-        this(arr, 0);
+        this(checkHashBytes(arr), 0);
     }
 
     /**
@@ -67,6 +67,13 @@ public final class ${typename} implements Comparable<${typename}> {
             throw new IllegalArgumentException("Expected a " + SIZE_IN_BYTES * 2 + "-character hexadecimal ${typename} hash, but got " + s.length() + " characters.");
         }
         return s;
+    }
+
+    private static byte[] checkHashBytes(byte[] b){
+        if (b.length != SIZE_IN_BYTES) {
+            throw new IllegalArgumentException("Expected a " + SIZE_IN_BYTES + "-byte ${typename} hash, but got " + b.length + " bytes.");
+        }
+        return b;
     }
 
     static @NotNull MessageDigest getThreadLocalDigest() {

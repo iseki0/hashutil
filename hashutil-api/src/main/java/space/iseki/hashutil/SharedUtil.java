@@ -29,6 +29,10 @@ class SharedUtil {
     private static final ThreadLocal<WeakReference<ByteBuffer>> bufferThreadLocal = new ThreadLocal<>();
     static VarHandle AVH = MethodHandles.byteArrayViewVarHandle(int[].class, ByteOrder.BIG_ENDIAN).withInvokeExactBehavior();
 
+    @FunctionalInterface
+    interface FC<T>{
+        T apply(byte[] arr, int off);
+    }
     static {
         var p = System.getProperty(BUFFER_PROPERTY_NAME);
         if (p == null || p.isBlank()) {
@@ -51,7 +55,7 @@ class SharedUtil {
         }
     }
 
-    static <T> T forInputStream(MessageDigest digest, InputStream inputStream, Function<byte[], T> call) throws IOException {
+    static <T> T forInputStream(MessageDigest digest, InputStream inputStream, FC<T> call) throws IOException {
         var buf = getSharedBuffer().array();
         try {
             while (true) {
@@ -68,7 +72,7 @@ class SharedUtil {
         }
     }
 
-    static <T> T forReadableChannel(MessageDigest digest, ReadableByteChannel channel, Function<byte[], T> call) throws IOException {
+    static <T> T forReadableChannel(MessageDigest digest, ReadableByteChannel channel, FC<T> call) throws IOException {
         var buf = getSharedBuffer();
         var arr = buf.array();
         try {
@@ -90,7 +94,7 @@ class SharedUtil {
     }
 
 
-    static <T> T forPath(MessageDigest digest, Path path, Function<byte[], T> call) throws IOException {
+    static <T> T forPath(MessageDigest digest, Path path, FC<T> call) throws IOException {
         var ch = Files.newByteChannel(path, StandardOpenOption.READ);
         IOException th = null;
         try {
@@ -111,26 +115,26 @@ class SharedUtil {
         }
     }
 
-    static <T> T forBytes(MessageDigest digest, byte[] data, int off, int len, Function<byte[], T> call) {
+    static <T> T forBytes(MessageDigest digest, byte[] data, int off, int len, FC<T> call) {
         try {
             digest.update(data, off, len);
-            return call.apply(digest.digest());
+            return call.apply(digest.digest(), 0);
         } catch (Throwable throwable) {
             digest.reset();
             throw throwable;
         }
     }
 
-    private static <T> T handleDigest(byte[] arr, MessageDigest digest, Function<byte[], T> call) {
+    private static <T> T handleDigest(byte[] arr, MessageDigest digest, FC<T> call) {
         try {
             digest.digest(arr, 0, digest.getDigestLength());
         } catch (DigestException e) {
             throw new RuntimeException(e);
         }
-        return call.apply(arr);
+        return call.apply(arr, 0);
     }
 
-    static <T> MessageDigestInterceptedInputStream<T> forInterceptedInputStream(MessageDigest digest, InputStream inputStream, Function<byte[], T> call) {
+    static <T> MessageDigestInterceptedInputStream<T> forInterceptedInputStream(MessageDigest digest, InputStream inputStream, FC<T> call) {
         return new MessageDigestInterceptedInputStream<>(digest, call, inputStream);
     }
 

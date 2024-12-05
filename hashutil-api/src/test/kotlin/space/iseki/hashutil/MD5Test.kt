@@ -24,6 +24,14 @@ class MD5Test {
     }
 
     @Test
+    fun test1d2(){
+        Path.of("../gradle/wrapper/gradle-wrapper.jar").inputStream().use {
+            val md5 = it.buffered().MD5()
+            assertEquals(MD5("34e61f332027ce6850d6e3d94402ae8c"), md5)
+        }
+    }
+
+    @Test
     fun test2() {
         val shA256 = "aa".encodeToByteArray().SHA256()
         assertEquals(SHA256("961b6dd3ede3cb8ecbaacbd68de040cd78eb2ed5889130cceb4c49268ea4d506"), shA256)
