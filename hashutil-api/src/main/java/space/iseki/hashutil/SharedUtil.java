@@ -1,6 +1,7 @@
 package space.iseki.hashutil;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,8 +22,10 @@ import java.util.function.Function;
 
 class SharedUtil {
     public static final @NotNull String BUFFER_PROPERTY_NAME = "space.iseki.hashutil.buffer.size";
+    public static final @NotNull String USE_THREAD_LOCAL_PROPERTY_NAME = "space.iseki.hashutil.threadlocal";
     public static final int DEFAULT_BUFFER_SIZE = 8 * 1024;
     public static final int BUFFER_SIZE;
+    public static final boolean USE_THREAD_LOCAL;
     private static final ThreadLocal<WeakReference<ByteBuffer>> bufferThreadLocal = new ThreadLocal<>();
     static VarHandle AVH = MethodHandles.byteArrayViewVarHandle(int[].class, ByteOrder.BIG_ENDIAN).withInvokeExactBehavior();
 
@@ -33,6 +36,11 @@ class SharedUtil {
         } else {
             BUFFER_SIZE = Integer.parseInt(p);
         }
+        USE_THREAD_LOCAL = Boolean.parseBoolean(System.getProperty(USE_THREAD_LOCAL_PROPERTY_NAME, "true"));
+    }
+
+    static @Nullable ThreadLocal<MessageDigest> getThreadLocal(String name) {
+        return USE_THREAD_LOCAL ? ThreadLocal.withInitial(() -> SharedUtil.messageDigest(name)) : null;
     }
 
     static MessageDigest messageDigest(String name) {

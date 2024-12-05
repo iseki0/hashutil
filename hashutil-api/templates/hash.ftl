@@ -16,7 +16,7 @@ import java.util.HexFormat;
  */
 @Serializable(with = ${typename}Serializer.class)
 public final class ${typename} implements Comparable<${typename}> {
-    private static final ThreadLocal<MessageDigest> threadLocal = ThreadLocal.withInitial(() -> SharedUtil.messageDigest("${typename}"));
+    private static final ThreadLocal<MessageDigest> threadLocal = SharedUtil.getThreadLocal("${typename}");
     public static final @NotNull ${typename} ZERO = new ${typename}(<#list 0..<size as i>0<#sep>, </#list>);
     public static final int SIZE_IN_BYTES = ${size} * 4;
 
@@ -63,7 +63,7 @@ public final class ${typename} implements Comparable<${typename}> {
     }
 
     static @NotNull MessageDigest getThreadLocalDigest() {
-        return threadLocal.get();
+        return threadLocal != null ? threadLocal.get() : newDigest();
     }
 
     /**
