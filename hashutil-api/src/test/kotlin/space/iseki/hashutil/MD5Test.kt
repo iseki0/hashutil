@@ -5,6 +5,7 @@ import kotlin.io.path.inputStream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class MD5Test {
 
@@ -38,5 +39,10 @@ class MD5Test {
             assertEquals(b, md5InputStream.digest)
             println(md5InputStream.digest)
         }
+    }
+
+    @Test
+    fun testZero(){
+        assertTrue { MD5.ZERO.toString().all { it == '0' } }
     }
 }
