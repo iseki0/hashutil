@@ -16,7 +16,6 @@ import java.util.HexFormat;
  */
 @Serializable(with = ${typename}Serializer.class)
 public final class ${typename} implements Comparable<${typename}> {
-    private static final ThreadLocal<MessageDigest> threadLocal = SharedUtil.getThreadLocal("${typename}");
     public static final @NotNull ${typename} ZERO = new ${typename}(<#list 0..<size as i>0<#sep>, </#list>);
     public static final int SIZE_IN_BYTES = ${size} * 4;
 
@@ -76,10 +75,6 @@ public final class ${typename} implements Comparable<${typename}> {
         return b;
     }
 
-    static @NotNull MessageDigest getThreadLocalDigest() {
-        return threadLocal != null ? threadLocal.get() : newDigest();
-    }
-
     /**
     * Create a new {@link MessageDigest} with the algorithm "${typename}".
     *
@@ -135,7 +130,7 @@ public final class ${typename} implements Comparable<${typename}> {
      * @throws RuntimeException wraps a {@link NoSuchAlgorithmException}, if the algorithm is not available
      */
     public static @NotNull ${typename} of(@NotNull InputStream inputStream) throws IOException {
-        return SharedUtil.forInputStream(getThreadLocalDigest(), inputStream, ${typename}::new);
+        return SharedUtil.forInputStream(newDigest(), inputStream, ${typename}::new);
     }
 
     /**
@@ -146,7 +141,7 @@ public final class ${typename} implements Comparable<${typename}> {
      * @throws RuntimeException wraps a {@link NoSuchAlgorithmException}, if the algorithm is not available
      */
     public static @NotNull ${typename} of(@NotNull ReadableByteChannel channel) throws IOException {
-        return SharedUtil.forReadableChannel(getThreadLocalDigest(), channel, ${typename}::new);
+        return SharedUtil.forReadableChannel(newDigest(), channel, ${typename}::new);
     }
 
     /**
@@ -157,7 +152,7 @@ public final class ${typename} implements Comparable<${typename}> {
      * @throws RuntimeException wraps a {@link NoSuchAlgorithmException}, if the algorithm is not available
      */
     public static @NotNull ${typename} of(@NotNull Path path) throws IOException {
-        return SharedUtil.forPath(getThreadLocalDigest(), path, ${typename}::new);
+        return SharedUtil.forPath(newDigest(), path, ${typename}::new);
     }
 
     /**
@@ -169,7 +164,7 @@ public final class ${typename} implements Comparable<${typename}> {
      * @throws RuntimeException wraps a {@link NoSuchAlgorithmException}, if the algorithm is not available
      */
     public static @NotNull ${typename} of(byte @NotNull [] data, int off, int len) {
-        return SharedUtil.forBytes(getThreadLocalDigest(), data, off, len, ${typename}::new);
+        return SharedUtil.forBytes(newDigest(), data, off, len, ${typename}::new);
     }
 
     /**

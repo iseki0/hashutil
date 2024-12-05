@@ -18,21 +18,13 @@ import java.security.DigestException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.function.Function;
 
 class SharedUtil {
     public static final @NotNull String BUFFER_PROPERTY_NAME = "space.iseki.hashutil.buffer.size";
-    public static final @NotNull String USE_THREAD_LOCAL_PROPERTY_NAME = "space.iseki.hashutil.threadlocal";
     public static final int DEFAULT_BUFFER_SIZE = 8 * 1024;
     public static final int BUFFER_SIZE;
-    public static final boolean USE_THREAD_LOCAL;
-    private static final ThreadLocal<WeakReference<ByteBuffer>> bufferThreadLocal = new ThreadLocal<>();
     static VarHandle AVH = MethodHandles.byteArrayViewVarHandle(int[].class, ByteOrder.BIG_ENDIAN).withInvokeExactBehavior();
 
-    @FunctionalInterface
-    interface FC<T>{
-        T apply(byte[] arr, int off);
-    }
     static {
         var p = System.getProperty(BUFFER_PROPERTY_NAME);
         if (p == null || p.isBlank()) {
@@ -40,11 +32,6 @@ class SharedUtil {
         } else {
             BUFFER_SIZE = Integer.parseInt(p);
         }
-        USE_THREAD_LOCAL = Boolean.parseBoolean(System.getProperty(USE_THREAD_LOCAL_PROPERTY_NAME, "true"));
-    }
-
-    static @Nullable ThreadLocal<MessageDigest> getThreadLocal(String name) {
-        return USE_THREAD_LOCAL ? ThreadLocal.withInitial(() -> SharedUtil.messageDigest(name)) : null;
     }
 
     static MessageDigest messageDigest(String name) {
@@ -56,7 +43,7 @@ class SharedUtil {
     }
 
     static <T> T forInputStream(MessageDigest digest, InputStream inputStream, FC<T> call) throws IOException {
-        var buf = getSharedBuffer().array();
+        var buf = new byte[BUFFER_SIZE];
         try {
             while (true) {
                 var n = inputStream.read(buf);
@@ -65,7 +52,11 @@ class SharedUtil {
             }
             return handleDigest(buf, digest, call);
         } catch (Throwable th) {
-            digest.reset();
+            try {
+                digest.reset();
+            } catch (Throwable th1) {
+                th.addSuppressed(th1);
+            }
             throw th;
         } finally {
             Arrays.fill(buf, (byte) 0);
@@ -73,7 +64,7 @@ class SharedUtil {
     }
 
     static <T> T forReadableChannel(MessageDigest digest, ReadableByteChannel channel, FC<T> call) throws IOException {
-        var buf = getSharedBuffer();
+        var buf = ByteBuffer.allocate(BUFFER_SIZE);
         var arr = buf.array();
         try {
             while (true) {
@@ -85,14 +76,17 @@ class SharedUtil {
             }
             return handleDigest(arr, digest, call);
         } catch (Throwable th) {
-            digest.reset();
+            try {
+                digest.reset();
+            } catch (Throwable th1) {
+                th.addSuppressed(th1);
+            }
             throw th;
         } finally {
             buf.clear();
             Arrays.fill(arr, (byte) 0);
         }
     }
-
 
     static <T> T forPath(MessageDigest digest, Path path, FC<T> call) throws IOException {
         var ch = Files.newByteChannel(path, StandardOpenOption.READ);
@@ -110,6 +104,7 @@ class SharedUtil {
                     throw e;
                 } else {
                     th.addSuppressed(e);
+                    throw th;
                 }
             }
         }
@@ -120,7 +115,11 @@ class SharedUtil {
             digest.update(data, off, len);
             return call.apply(digest.digest(), 0);
         } catch (Throwable throwable) {
-            digest.reset();
+            try {
+                digest.reset();
+            } catch (Throwable throwable1) {
+                throwable.addSuppressed(throwable1);
+            }
             throw throwable;
         }
     }
@@ -138,13 +137,9 @@ class SharedUtil {
         return new MessageDigestInterceptedInputStream<>(digest, call, inputStream);
     }
 
-    private static @NotNull ByteBuffer getSharedBuffer() {
-        var ref = bufferThreadLocal.get();
-        var r = ref != null ? ref.get() : null;
-        if (r == null) {
-            r = ByteBuffer.allocate(BUFFER_SIZE);
-            bufferThreadLocal.set(new WeakReference<>(r));
-        }
-        return r;
+    @FunctionalInterface
+    interface FC<T> {
+        T apply(byte[] arr, int off);
     }
+
 }
