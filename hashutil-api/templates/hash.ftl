@@ -59,7 +59,14 @@ public final class ${typename} implements Comparable<${typename}> {
      * @param hex hex string
      */
     public ${typename}(@NotNull String hex) {
-        this(HexFormat.of().parseHex(hex));
+        this(HexFormat.of().parseHex(checkHashHex(hex)));
+    }
+
+    private static String checkHashHex(String s) {
+        if (s.length() != SIZE_IN_BYTES * 2) {
+            throw new IllegalArgumentException("Expected a " + SIZE_IN_BYTES * 2 + "-character hexadecimal ${typename} hash, but got " + s.length() + " characters.");
+        }
+        return s;
     }
 
     static @NotNull MessageDigest getThreadLocalDigest() {
