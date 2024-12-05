@@ -85,26 +85,36 @@ publishing {
             }
             artifact(javadocJar)
             pom {
-                name.set("hashutil")
-                description.set("Utils hash")
-                url.set("https://github.com/iseki0/hashutil")
+                val projectUrl = "https://github.com/iseki0/hashutil"
+                name = "hashutil"
+                description = "Utils hash"
+                url = projectUrl
                 licenses {
                     license {
-                        name.set("Apache-2.0")
-                        url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                        name = "Apache-2.0"
+                        url = "https://www.apache.org/licenses/LICENSE-2.0"
                     }
                 }
                 developers {
                     developer {
-                        id.set("iseki0")
-                        name.set("iseki zero")
-                        email.set("iseki@iseki.space")
+                        id = "iseki0"
+                        name = "iseki zero"
+                        email = "iseki@iseki.space"
                     }
                 }
+                inceptionYear = "2024"
                 scm {
-                    connection.set("scm:git:https://github.com/iseki0/hashutil.git")
-                    developerConnection.set("scm:git:https://github.com/iseki0/hashutil.git")
-                    url.set("https://github.com/iseki0/hashutil")
+                    connection = "scm:git:$projectUrl.git"
+                    developerConnection = "scm:git:$projectUrl.git"
+                    url = projectUrl
+                }
+                issueManagement {
+                    system = "GitHub"
+                    url = "$projectUrl/issues"
+                }
+                ciManagement {
+                    system = "GitHub"
+                    url = "$projectUrl/actions"
                 }
             }
         }
