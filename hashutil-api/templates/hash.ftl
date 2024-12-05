@@ -105,7 +105,11 @@ public final class ${typename} implements Comparable<${typename}> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(<#list 0..<size as i>i${i}<#sep>, </#list>);
+        int r = i0;
+<#list 1..<size as i>
+        r = 31 * r + i${i};
+</#list>
+        return r;
     }
 
 
