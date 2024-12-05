@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -24,4 +24,4 @@ jobs:
           build-scan-terms-of-use-agree: "yes"
 
       - name: Build with Gradle
-        run: .\gradlew build
+        run: ./gradlew build
