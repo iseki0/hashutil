@@ -24,7 +24,7 @@ class SharedUtil {
     public static final int DEFAULT_BUFFER_SIZE = 8 * 1024;
     public static final int BUFFER_SIZE;
     private static final ThreadLocal<WeakReference<ByteBuffer>> bufferThreadLocal = new ThreadLocal<>();
-    static VarHandle AVH = MethodHandles.byteArrayViewVarHandle(int[].class, ByteOrder.BIG_ENDIAN);
+    static VarHandle AVH = MethodHandles.byteArrayViewVarHandle(int[].class, ByteOrder.BIG_ENDIAN).withInvokeExactBehavior();
 
     static {
         var p = System.getProperty(BUFFER_PROPERTY_NAME);
