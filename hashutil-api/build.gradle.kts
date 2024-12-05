@@ -8,6 +8,7 @@ plugins {
     id("org.jetbrains.dokka")
     signing
     `maven-publish`
+    id("org.jetbrains.kotlinx.binary-compatibility-validator")
 }
 
 dependencies {

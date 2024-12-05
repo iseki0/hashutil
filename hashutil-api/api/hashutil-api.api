@@ -1,0 +1,210 @@
+public final class space/iseki/hashutil/-MD2 {
+	public static final fun MD2 (Ljava/io/InputStream;)Lspace/iseki/hashutil/MD2;
+	public static final fun MD2 (Ljava/lang/String;)Lspace/iseki/hashutil/MD2;
+	public static final fun MD2 (Ljava/lang/String;Ljava/nio/charset/Charset;)Lspace/iseki/hashutil/MD2;
+	public static final fun MD2 (Ljava/nio/file/Path;)Lspace/iseki/hashutil/MD2;
+	public static final fun MD2 ([B)Lspace/iseki/hashutil/MD2;
+}
+
+public final class space/iseki/hashutil/-MD5 {
+	public static final fun MD5 (Ljava/io/InputStream;)Lspace/iseki/hashutil/MD5;
+	public static final fun MD5 (Ljava/lang/String;)Lspace/iseki/hashutil/MD5;
+	public static final fun MD5 (Ljava/lang/String;Ljava/nio/charset/Charset;)Lspace/iseki/hashutil/MD5;
+	public static final fun MD5 (Ljava/nio/file/Path;)Lspace/iseki/hashutil/MD5;
+	public static final fun MD5 ([B)Lspace/iseki/hashutil/MD5;
+}
+
+public final class space/iseki/hashutil/-SHA1 {
+	public static final fun SHA1 (Ljava/io/InputStream;)Lspace/iseki/hashutil/SHA1;
+	public static final fun SHA1 (Ljava/lang/String;)Lspace/iseki/hashutil/SHA1;
+	public static final fun SHA1 (Ljava/lang/String;Ljava/nio/charset/Charset;)Lspace/iseki/hashutil/SHA1;
+	public static final fun SHA1 (Ljava/nio/file/Path;)Lspace/iseki/hashutil/SHA1;
+	public static final fun SHA1 ([B)Lspace/iseki/hashutil/SHA1;
+}
+
+public final class space/iseki/hashutil/-SHA128 {
+	public static final fun SHA128 (Ljava/io/InputStream;)Lspace/iseki/hashutil/SHA128;
+	public static final fun SHA128 (Ljava/lang/String;)Lspace/iseki/hashutil/SHA128;
+	public static final fun SHA128 (Ljava/lang/String;Ljava/nio/charset/Charset;)Lspace/iseki/hashutil/SHA128;
+	public static final fun SHA128 (Ljava/nio/file/Path;)Lspace/iseki/hashutil/SHA128;
+	public static final fun SHA128 ([B)Lspace/iseki/hashutil/SHA128;
+}
+
+public final class space/iseki/hashutil/-SHA224 {
+	public static final fun SHA224 (Ljava/io/InputStream;)Lspace/iseki/hashutil/SHA224;
+	public static final fun SHA224 (Ljava/lang/String;)Lspace/iseki/hashutil/SHA224;
+	public static final fun SHA224 (Ljava/lang/String;Ljava/nio/charset/Charset;)Lspace/iseki/hashutil/SHA224;
+	public static final fun SHA224 (Ljava/nio/file/Path;)Lspace/iseki/hashutil/SHA224;
+	public static final fun SHA224 ([B)Lspace/iseki/hashutil/SHA224;
+}
+
+public final class space/iseki/hashutil/-SHA256 {
+	public static final fun SHA256 (Ljava/io/InputStream;)Lspace/iseki/hashutil/SHA256;
+	public static final fun SHA256 (Ljava/lang/String;)Lspace/iseki/hashutil/SHA256;
+	public static final fun SHA256 (Ljava/lang/String;Ljava/nio/charset/Charset;)Lspace/iseki/hashutil/SHA256;
+	public static final fun SHA256 (Ljava/nio/file/Path;)Lspace/iseki/hashutil/SHA256;
+	public static final fun SHA256 ([B)Lspace/iseki/hashutil/SHA256;
+}
+
+public final class space/iseki/hashutil/-SHA512 {
+	public static final fun SHA512 (Ljava/io/InputStream;)Lspace/iseki/hashutil/SHA512;
+	public static final fun SHA512 (Ljava/lang/String;)Lspace/iseki/hashutil/SHA512;
+	public static final fun SHA512 (Ljava/lang/String;Ljava/nio/charset/Charset;)Lspace/iseki/hashutil/SHA512;
+	public static final fun SHA512 (Ljava/nio/file/Path;)Lspace/iseki/hashutil/SHA512;
+	public static final fun SHA512 ([B)Lspace/iseki/hashutil/SHA512;
+}
+
+public final class space/iseki/hashutil/-SM3 {
+	public static final fun SM3 (Ljava/io/InputStream;)Lspace/iseki/hashutil/SM3;
+	public static final fun SM3 (Ljava/lang/String;)Lspace/iseki/hashutil/SM3;
+	public static final fun SM3 (Ljava/lang/String;Ljava/nio/charset/Charset;)Lspace/iseki/hashutil/SM3;
+	public static final fun SM3 (Ljava/nio/file/Path;)Lspace/iseki/hashutil/SM3;
+	public static final fun SM3 ([B)Lspace/iseki/hashutil/SM3;
+}
+
+public final class space/iseki/hashutil/MD2 {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> ([B)V
+	public fun <init> ([BI)V
+	public fun bytes ()[B
+	public fun bytes ([BI)[B
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public static fun intercept (Ljava/io/InputStream;)Lspace/iseki/hashutil/MessageDigestInterceptedInputStream;
+	public static fun of (Ljava/io/InputStream;)Lspace/iseki/hashutil/MD2;
+	public static fun of (Ljava/nio/channels/ReadableByteChannel;)Lspace/iseki/hashutil/MD2;
+	public static fun of (Ljava/nio/file/Path;)Lspace/iseki/hashutil/MD2;
+	public static fun of ([B)Lspace/iseki/hashutil/MD2;
+	public static fun of ([BII)Lspace/iseki/hashutil/MD2;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class space/iseki/hashutil/MD5 {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> ([B)V
+	public fun <init> ([BI)V
+	public fun bytes ()[B
+	public fun bytes ([BI)[B
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public static fun intercept (Ljava/io/InputStream;)Lspace/iseki/hashutil/MessageDigestInterceptedInputStream;
+	public static fun of (Ljava/io/InputStream;)Lspace/iseki/hashutil/MD5;
+	public static fun of (Ljava/nio/channels/ReadableByteChannel;)Lspace/iseki/hashutil/MD5;
+	public static fun of (Ljava/nio/file/Path;)Lspace/iseki/hashutil/MD5;
+	public static fun of ([B)Lspace/iseki/hashutil/MD5;
+	public static fun of ([BII)Lspace/iseki/hashutil/MD5;
+	public fun toString ()Ljava/lang/String;
+}
+
+public class space/iseki/hashutil/MessageDigestInterceptedInputStream : java/io/InputStream {
+	public fun available ()I
+	public fun close ()V
+	public fun getDigest ()Ljava/lang/Object;
+	public fun read ()I
+	public fun read ([BII)I
+	public fun skip (J)J
+	public fun skipNBytes (J)V
+}
+
+public final class space/iseki/hashutil/SHA1 {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> ([B)V
+	public fun <init> ([BI)V
+	public fun bytes ()[B
+	public fun bytes ([BI)[B
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public static fun intercept (Ljava/io/InputStream;)Lspace/iseki/hashutil/MessageDigestInterceptedInputStream;
+	public static fun of (Ljava/io/InputStream;)Lspace/iseki/hashutil/SHA1;
+	public static fun of (Ljava/nio/channels/ReadableByteChannel;)Lspace/iseki/hashutil/SHA1;
+	public static fun of (Ljava/nio/file/Path;)Lspace/iseki/hashutil/SHA1;
+	public static fun of ([B)Lspace/iseki/hashutil/SHA1;
+	public static fun of ([BII)Lspace/iseki/hashutil/SHA1;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class space/iseki/hashutil/SHA128 {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> ([B)V
+	public fun <init> ([BI)V
+	public fun bytes ()[B
+	public fun bytes ([BI)[B
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public static fun intercept (Ljava/io/InputStream;)Lspace/iseki/hashutil/MessageDigestInterceptedInputStream;
+	public static fun of (Ljava/io/InputStream;)Lspace/iseki/hashutil/SHA128;
+	public static fun of (Ljava/nio/channels/ReadableByteChannel;)Lspace/iseki/hashutil/SHA128;
+	public static fun of (Ljava/nio/file/Path;)Lspace/iseki/hashutil/SHA128;
+	public static fun of ([B)Lspace/iseki/hashutil/SHA128;
+	public static fun of ([BII)Lspace/iseki/hashutil/SHA128;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class space/iseki/hashutil/SHA224 {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> ([B)V
+	public fun <init> ([BI)V
+	public fun bytes ()[B
+	public fun bytes ([BI)[B
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public static fun intercept (Ljava/io/InputStream;)Lspace/iseki/hashutil/MessageDigestInterceptedInputStream;
+	public static fun of (Ljava/io/InputStream;)Lspace/iseki/hashutil/SHA224;
+	public static fun of (Ljava/nio/channels/ReadableByteChannel;)Lspace/iseki/hashutil/SHA224;
+	public static fun of (Ljava/nio/file/Path;)Lspace/iseki/hashutil/SHA224;
+	public static fun of ([B)Lspace/iseki/hashutil/SHA224;
+	public static fun of ([BII)Lspace/iseki/hashutil/SHA224;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class space/iseki/hashutil/SHA256 {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> ([B)V
+	public fun <init> ([BI)V
+	public fun bytes ()[B
+	public fun bytes ([BI)[B
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public static fun intercept (Ljava/io/InputStream;)Lspace/iseki/hashutil/MessageDigestInterceptedInputStream;
+	public static fun of (Ljava/io/InputStream;)Lspace/iseki/hashutil/SHA256;
+	public static fun of (Ljava/nio/channels/ReadableByteChannel;)Lspace/iseki/hashutil/SHA256;
+	public static fun of (Ljava/nio/file/Path;)Lspace/iseki/hashutil/SHA256;
+	public static fun of ([B)Lspace/iseki/hashutil/SHA256;
+	public static fun of ([BII)Lspace/iseki/hashutil/SHA256;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class space/iseki/hashutil/SHA512 {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> ([B)V
+	public fun <init> ([BI)V
+	public fun bytes ()[B
+	public fun bytes ([BI)[B
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public static fun intercept (Ljava/io/InputStream;)Lspace/iseki/hashutil/MessageDigestInterceptedInputStream;
+	public static fun of (Ljava/io/InputStream;)Lspace/iseki/hashutil/SHA512;
+	public static fun of (Ljava/nio/channels/ReadableByteChannel;)Lspace/iseki/hashutil/SHA512;
+	public static fun of (Ljava/nio/file/Path;)Lspace/iseki/hashutil/SHA512;
+	public static fun of ([B)Lspace/iseki/hashutil/SHA512;
+	public static fun of ([BII)Lspace/iseki/hashutil/SHA512;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class space/iseki/hashutil/SM3 {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> ([B)V
+	public fun <init> ([BI)V
+	public fun bytes ()[B
+	public fun bytes ([BI)[B
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public static fun intercept (Ljava/io/InputStream;)Lspace/iseki/hashutil/MessageDigestInterceptedInputStream;
+	public static fun of (Ljava/io/InputStream;)Lspace/iseki/hashutil/SM3;
+	public static fun of (Ljava/nio/channels/ReadableByteChannel;)Lspace/iseki/hashutil/SM3;
+	public static fun of (Ljava/nio/file/Path;)Lspace/iseki/hashutil/SM3;
+	public static fun of ([B)Lspace/iseki/hashutil/SM3;
+	public static fun of ([BII)Lspace/iseki/hashutil/SM3;
+	public fun toString ()Ljava/lang/String;
+}
+
