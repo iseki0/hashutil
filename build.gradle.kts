@@ -6,7 +6,7 @@ plugins {
 
 allprojects {
     group = "space.iseki.hashutil"
-    version = "0.5-SNAPSHOT"
+    version = "0.6-SNAPSHOT"
 
     repositories {
         mavenCentral()
