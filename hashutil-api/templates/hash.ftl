@@ -58,7 +58,7 @@ public final class ${typename} implements Comparable<${typename}> {
      * @param hex hex string
      */
     public ${typename}(@NotNull String hex) {
-        this(HexFormat.of().parseHex(checkHashHex(hex)));
+        this(HexFormat.of().parseHex(checkHashHex(hex)), 0);
     }
 
     private static String checkHashHex(String s) {
