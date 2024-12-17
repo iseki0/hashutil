@@ -198,5 +198,26 @@ public final class ${typename} implements Comparable<${typename}> {
 </#list>
         return 0;
     }
+
+    public @NotNull ${typename} xor(@NotNull ${typename} o) {
+        return new ${typename}(<#list 0..<size as i>i${i} ^ o.i${i}<#sep>, </#list>);
+    }
+
+    public @NotNull ${typename} and(@NotNull ${typename} o) {
+        return new ${typename}(<#list 0..<size as i>i${i} & o.i${i}<#sep>, </#list>);
+    }
+
+    public @NotNull ${typename} or(@NotNull ${typename} o) {
+        return new ${typename}(<#list 0..<size as i>i${i} | o.i${i}<#sep>, </#list>);
+    }
+
+    public @NotNull ${typename} inv() {
+        return new ${typename}(<#list 0..<size as i>~i${i}<#sep>, </#list>);
+    }
+
+    public int bitCount() {
+        return <#list 0..<size as i>Integer.bitCount(i${i})<#sep> + </#list>;
+    }
+
 }
 
